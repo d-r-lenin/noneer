@@ -1,15 +1,27 @@
 {
-    "name": "noneer",
-    "description": "make any element disapear ;o",
+    "name": "JustDeleteThis",
+    "description": "Just delete the annoying html Elements with two clicks ;o",
     "version": "1.0",
     "manifest_version": 3,
     "background": {
         "service_worker": "background.js"
     },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "content.js"
+            ]
+        }
+    ],
     "permissions": [
         "storage",
         "activeTab",
-        "scripting"
+        "scripting",
+        "contextMenus"
     ],
     "action": {
         "default_popup": "popup.html",
