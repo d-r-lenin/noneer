@@ -1,24 +1,33 @@
-// Initialize button with user's preferred color
-let changeColor = document.getElementById("changeColor");
+const undoBtn = document.querySelector('#undo-btn');
+const resetBtn = document.querySelector('#reset-btn');
 
-chrome.storage.sync.get("color", ({ color }) => {
-    changeColor.style.backgroundColor = color;
-});
-
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
+undoBtn.addEventListener('click',async e =>{
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        function: setPageBackgroundColor,
+        function: ()=>{
+            let item = historyStack.pop();
+            if(item === 'overflow')return;
+            const el = document.querySelector(item.selector);
+            el.style.display = item.display;
+        },
     });
-});
+})
 
-// The body of this function will be executed as a content script inside the
-// current page
-function setPageBackgroundColor() {
-    chrome.storage.sync.get("color", ({ color }) => {
-        document.body.style.backgroundColor = color;
+
+resetBtn.addEventListener('click', async e => {
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: () => {
+            const items = historyStack.getAll();
+            if (items.length === 0) return;
+            items.forEach(item => {
+                const el = document.querySelector(item.selector);
+                el.style.display = item.display;
+            });
+
+            historyStack.clear();
+        },
     });
-}
+})

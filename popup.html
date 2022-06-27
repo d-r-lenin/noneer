@@ -2,12 +2,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- <link rel="stylesheet" href="button.css"> -->
+    <link rel="stylesheet" href="popup.css">
   </head>
   <body>
-     <h1>Step 1</h1>
-      <p>Right click on the element to be removed</p>
-      <h1>Step 2</h1>
-      <p>click "Just Delete"</p>
+    <div class="wrap">
+      <div class="background-circle"></div>
+      <div class="up">
+        <div id="undo-btn" class="circle-main">
+          <div class="circle-shadow"></div>
+          <div class="text">
+            Undo
+          </div>
+        </div>
+      </div>
+      <div class="down">
+        <div class="down-btn" id="reset-btn">
+          <div class="text-reset">Reset</div>
+        </div>
+      </div>
+    </div>
+    <script src="popup.js"></script>
   </body>
 </html>

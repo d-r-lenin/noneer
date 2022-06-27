@@ -1,12 +1,11 @@
-console.log("hellosdjasndkj");
+const historyStack = new Stack();
+
 document.oncontextmenu = (e)=>{
-    let a ;
     if(!e.target.id){
-        e.target.id = 'id' + Math.round(Math.random()*100000);
+        e.target.id = 'id' + Math.round(Math.random()*10000000); //in case if the element don't have id
     }
-    a = getElementText(e.target);
-    console.log(a);
-    chrome.storage.sync.set({"lastClicked":a});
+    let selector = getElementText(e.target);
+    chrome.storage.sync.set({"lastClicked":selector});
 }
 
 
